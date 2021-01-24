@@ -9,7 +9,18 @@ from pkg_resources import resource_filename
 class NotificationMagics(Magics):
     def __init__(self, shell, **kwargs):
         self.options = {"icon": "/static/favicon.ico"}
+        self._check_browser_notification_support()
         super().__init__(shell=shell, **kwargs)
+    
+    def _check_browser_notification_support(self):
+        # TODO check if notifications are supported or turned on 
+        pass
+
+    def _show_notification(self):
+        js_filename = resource_filename("jupyterlab_notification", "js/notification.js")
+        with open(js_filename) as js_file:
+            js_string = js_file.read().format(notification_options=self.options)
+            display(Javascript(data=js_string))
 
     @magic_arguments.magic_arguments()
     @magic_arguments.argument(
@@ -27,9 +38,4 @@ class NotificationMagics(Magics):
         ipython.run_cell(cell)
         self._show_notification()
 
-    def _show_notification(self):
-        js_filename = resource_filename("jupyterlab_notification", "js/notification.js")
-        with open(js_filename) as js_file:
-            js_string = js_file.read().format(notification_options=self.options)
-            print(js_string)
-            display(Javascript(data=js_string))
+    
