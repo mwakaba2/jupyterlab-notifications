@@ -1,8 +1,11 @@
 # Jupyterlab Notifications
 Notebook Cell Completion Browser Notifications
 
-TODO: include configuration instructions
-TODO: add what browsers are supported
-TODO: add requirements to flit
-TODO: how to build for development
-TODO: publish with flit
+
+### TODOS
+
+* include configuration instructions
+* add what browsers are supported
+* add requirements to flit
+* explain how to build for development
+* publish with flit
