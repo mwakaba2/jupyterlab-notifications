@@ -1,5 +1,5 @@
-# Jupyterlab Notifications
-Notebook Cell Completion Browser Notifications
+# Jupyter Notifications
+Notebook Cell Completion Browser Notifications for Jupyter Notebook and Lab. 
 
 ## Installation
 
