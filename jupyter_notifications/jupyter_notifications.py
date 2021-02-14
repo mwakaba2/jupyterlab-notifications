@@ -11,17 +11,17 @@ class NotificationMagics(Magics):
         self.options = {"icon": "/static/favicon.ico"}
         self._check_browser_notification_settings()
         super().__init__(shell=shell, **kwargs)
-    
+
     def _check_browser_notification_settings(self):
         """ Alert if browser notification is not supported or enabled. """
-        js_filename = resource_filename("jupyterlab_notification", "js/settings.js")
+        js_filename = resource_filename("jupyter_notifications", "js/settings.js")
         with open(js_filename) as js_file:
             js_string = js_file.read()
             display(Javascript(data=js_string))
 
     def _show_notification(self):
         """ Show notebook execution completion notification. """
-        js_filename = resource_filename("jupyterlab_notification", "js/notification.js")
+        js_filename = resource_filename("jupyter_notifications", "js/notification.js")
         with open(js_filename) as js_file:
             js_string = js_file.read().format(notification_options=self.options)
             display(Javascript(data=js_string))
@@ -42,5 +42,3 @@ class NotificationMagics(Magics):
         ipython = get_ipython()
         ipython.run_cell(cell)
         self._show_notification()
-
-    

@@ -3,8 +3,17 @@ requires = ["flit_core >=2,<4"]
 build-backend = "flit_core.buildapi"
 
 [tool.flit.metadata]
-module = "jupyterlab_notification"
+module = "jupyter_notifications"
 author = "Mariko Wakabayashi"
 author-email = "mariko@mwkby.com"
-classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
-
+home-page="https://github.com/mwakaba2/jupyter-notifications"
+description-file="README.md"
+classifiers = [
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3",
+]
+requires = [
+    "setuptools",
+    "ipython >=7.19",
+]
+requires-python=">=3.5"
