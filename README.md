@@ -9,16 +9,16 @@ You can find an example notebook in the `examples` folder.
 
 Cell magic command for notification after cell execution completion.
 ```
-%notify 
+%%notify 
 ```
 
 Cell magic command with custom message.
 ```
-%notify -m 'hello world!'
+%%notify -m 'hello world!'
 ```
 Or
 ```
-%notify --message 'hello world!' 
+%%notify --message 'hello world!' 
 ```
 
 
