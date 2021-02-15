@@ -1,7 +1,7 @@
 # Jupyter Notifications
 Notebook Cell Completion Browser Notifications for Jupyter Notebook and Lab. 
 
-![Notification Example](static/images/notification.png)
+<img alt="Notification Example" src="static/images/notification.png" width="500">
 
 You can find an example notebook in the `examples` folder.
 
@@ -26,7 +26,7 @@ Or
 
 Install the package via pip.
 ```
-pip install jupyter-notifications
+pip install jupyter_notifications
 ```
 Add the extension in the ipython kernel config's `c.InteractiveShellApp.extensions` section. 
 ```

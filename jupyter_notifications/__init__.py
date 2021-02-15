@@ -1,5 +1,5 @@
 """Jupyterlab browser notification magic commands"""
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 from .jupyter_notifications import NotificationMagics
 
