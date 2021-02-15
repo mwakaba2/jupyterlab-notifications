@@ -26,7 +26,7 @@ Or
 
 Install the package via pip.
 ```
-pip install jupyter-notifications
+pip install jupyter_notifications
 ```
 Add the extension in the ipython kernel config's `c.InteractiveShellApp.extensions` section. 
 ```
