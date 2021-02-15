@@ -6,7 +6,7 @@ build-backend = "flit_core.buildapi"
 module = "jupyter_notifications"
 author = "Mariko Wakabayashi"
 author-email = "mariko@mwkby.com"
-home-page="https://github.com/mwakaba2/_notifications"
+home-page="https://github.com/mwakaba2/jupyter_notifications"
 description-file="README.md"
 classifiers = [
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
