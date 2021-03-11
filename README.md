@@ -3,23 +3,29 @@ Notebook Cell Completion Browser Notifications for Jupyter Notebook and Lab.
 
 <img alt="Notification Example" src="static/images/notification.png" width="500">
 
-You can find an example notebook in the `examples` folder.
 
-![Notify Example](static/images/notify_example.png)
-
+# Features
 Cell magic command for notification after cell execution completion.
 ```
-%%notify 
+%notify
+...some code to execute...
 ```
 
 Cell magic command with custom message.
 ```
-%%notify -m 'hello world!'
+%notify -m 'hello world!'
+...some code to execute...
 ```
 Or
 ```
-%%notify --message 'hello world!' 
+%notify --message 'hello world!' 
+...some code to execute...
 ```
+
+# Tutorials
+You can find an example notebook in the `examples` folder.
+
+![Notify Example](static/images/notify_example.png)
 
 
 ## Installation
