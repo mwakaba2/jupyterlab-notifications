@@ -1,58 +1,109 @@
-# Jupyter Notifications
-Notebook Cell Completion Browser Notifications for Jupyter Notebook and Lab. 
+# jupyterlab-notifications
+
+![Github Actions Status](https://github.com/mwakaba2/jupyterlab-notifications/workflows/Build/badge.svg)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/mwakaba2/jupyterlab-notifications/main?urlpath=/lab/tree/demo.ipynb)
+[![PyPI](https://img.shields.io/pypi/v/jupyterlab-notifications.svg)](https://pypi.org/project/jupyterlab-notifications)
+[![npm](https://img.shields.io/npm/v/jupyterlab-notifications.svg)](https://www.npmjs.com/package/jupyterlab-notifications)
+
+Notebook Cell Completion Browser Notifications for JupyterLab. 
 
 <img alt="Notification Example" src="static/images/notification.png" width="500">
 
 
-# Features
-Cell magic command for notification after cell execution completion.
-```
-%notify
-...some code to execute...
+## Requirements
+
+* Web Browser that supports the Notification Web API (See [Browser Compatibility Chart](https://developer.mozilla.org/en-US/docs/Web/API/notification#browser_compatibility))
+* JupyterLab >= 1.0
+* Notebook Cell Timing needs to be enabled for Jupyterlab Notifications to work. Please go to Settings -> Advanced Settings Editor -> Notebook and update setting to:
+```json5
+{
+  // Recording timing
+  // Should timing data be recorded in cell metadata
+  "recordTiming": true
+}
 ```
 
-Cell magic command with custom message.
-```
-%notify -m 'hello world!'
-...some code to execute...
-```
-Or
-```
-%notify --message 'hello world!' 
-...some code to execute...
+## Install
+
+For JupyterLab 3.x, the extension can be installed with `pip`:
+
+```bash
+pip install jupyterlab-notifications
 ```
 
-# Tutorials
-You can find an example notebook in the `examples` folder.
+For JupyterLab 1.x and 2.x:
 
-![Notify Example](static/images/notify_example.png)
-
-
-## Installation
-
-Install the package via pip.
-```
-pip install jupyter_notifications
-```
-Add the extension in the ipython kernel config's `c.InteractiveShellApp.extensions` section. 
-```
-~/.ipython/profile_default/ipython_kernel_config.py
-...
-c.InteractiveShellApp.extensions = [ "jupyter_notifications" ]
-```
-Then spin up jupyter notebook or lab with 
-```
-$ jupyter notebook
-$ jupyter lab
-``` 
-
-## Development
-
-This extension was tested with the Google Chrome browser.
-This should work with any browser that has [access to the Notifications API](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API/Using_the_Notifications_API#browser_compatibility). 
-
-To build the extension locally, run the following command.
-```
-$ flit install
+```bash
+jupyter labextension install jupyterlab-notifications
 ```
 
+
+## Settings
+
+Use the following settings to update cell execution time for a notification and information to display in the notification. (in `Settings > Advanced Settings Editor`):
+
+```json5
+{
+    // Notifications
+    // jupyterlab-notifications:plugin
+    // Settings for the Notifications extension
+    // ****************************************
+
+    // Enabled Status
+    // Enable the extension or not.
+    "enabled": true,
+
+    // Minimum Notebook Cell Execution Time
+    // The minimum execution time to send out notification for a particular notebook cell (in seconds).
+    "minimum_cell_execution_time": 60,
+
+    // Report Notebook Cell Execution Time
+    // Display notebook cell execution time in the notification.
+    "report_cell_execution_time": true,
+
+    // Report Notebook Cell Number
+    // Display notebook cell number in the notification.
+    "report_cell_number": true
+}
+```
+
+![settings](static/images/notification.gif)
+
+## Contributing
+
+### Development install
+
+Note: You will need NodeJS to build the extension package.
+
+The `jlpm` command is JupyterLab's pinned version of
+[yarn](https://yarnpkg.com/) that is installed with JupyterLab. You may use
+`yarn` or `npm` in lieu of `jlpm` below.
+
+```bash
+# Clone the repo to your local environment
+# Change directory to the jupyterlab-notifications directory
+# Install package in development mode
+pip install -e .
+# Link your development version of the extension with JupyterLab
+jlpm run install:extension
+# Rebuild extension Typescript source after making changes
+jlpm run build
+```
+
+You can watch the source directory and run JupyterLab at the same time in different terminals to watch for changes in the extension's source and automatically rebuild the extension.
+
+```bash
+# Watch the source directory in one terminal, automatically rebuilding when needed
+jlpm run watch
+# Run JupyterLab in another terminal
+jupyter lab
+```
+
+With the watch command running, every saved change will immediately be built locally and available in your running JupyterLab. Refresh JupyterLab to load the change in your browser (you may need to wait several seconds for the extension to be rebuilt).
+
+### Uninstall
+
+```bash
+pip uninstall jupyterlab-notifications
+jupyter labextension uninstall jupyterlab-notifications
+```

@@ -1,0 +1,31 @@
+{
+  "title": "Notifications",
+  "description": "Settings for the Notifications extension",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "title": "Enabled Status",
+      "description": "Enable the extension or not.",
+      "default": true
+    },
+    "minimum_cell_execution_time": {
+      "type": "number",
+      "title": "Minimum Notebook Cell Execution Time",
+      "description": "The minimum execution time to send out notification for a particular notebook cell (in seconds).",
+      "default": 60
+    },
+    "report_cell_execution_time": {
+      "type": "boolean",
+      "title": "Report Notebook Cell Execution Time",
+      "description": "Display notebook cell execution time in the notification.",
+      "default": true
+    },
+    "report_cell_number": {
+      "type": "boolean",
+      "title": "Report Notebook Cell Number",
+      "description": "Display notebook cell number in the notification.",
+      "default": true
+    }
+  }
+}
