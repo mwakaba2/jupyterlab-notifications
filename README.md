@@ -98,5 +98,4 @@ With the watch command running, every saved change will immediately be built loc
 
 ```bash
 pip uninstall jupyterlab-notifications
-jupyter labextension uninstall jupyterlab-notifications
 ```
