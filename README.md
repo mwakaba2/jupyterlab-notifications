@@ -7,7 +7,7 @@
 
 Notebook Cell Completion Browser Notifications for JupyterLab. 
 
-<img alt="Notification Example" src="static/images/notification.png" width="500">
+<img width="398" alt="notification" src="https://user-images.githubusercontent.com/3497137/111880929-2be04480-897c-11eb-8655-7e6702d70d87.png">
 
 
 ## Requirements
@@ -67,7 +67,7 @@ Use the following settings to update cell execution time for a notification and 
 }
 ```
 
-![settings](static/images/notification.gif)
+![notification](https://user-images.githubusercontent.com/3497137/111881088-01db5200-897d-11eb-8faa-4701cabfcde4.gif)
 
 ## Contributing
 
