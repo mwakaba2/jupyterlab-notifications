@@ -13,7 +13,7 @@ Notebook Cell Completion Browser Notifications for JupyterLab.
 ## Requirements
 
 * Web Browser that supports the Notification Web API (See [Browser Compatibility Chart](https://developer.mozilla.org/en-US/docs/Web/API/notification#browser_compatibility))
-* JupyterLab >= 1.0
+* JupyterLab >= 3.0
 * Notebook Cell Timing needs to be enabled for Jupyterlab Notifications to work. Please go to Settings -> Advanced Settings Editor -> Notebook and update setting to:
 ```json5
 {
@@ -30,13 +30,6 @@ For JupyterLab 3.x, the extension can be installed with `pip`:
 ```bash
 pip install jupyterlab-notifications
 ```
-
-For JupyterLab 1.x and 2.x:
-
-```bash
-jupyter labextension install jupyterlab-notifications
-```
-
 
 ## Settings
 

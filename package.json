@@ -1,6 +1,6 @@
 {
   "name": "jupyterlab-notifications",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Jupyterlab extension to show notebook cell completion browser notifications",
   "keywords": [
     "jupyter",
