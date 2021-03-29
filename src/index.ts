@@ -51,7 +51,7 @@ const extension: JupyterFrontEndPlugin<void> = {
   optional: [ISettingRegistry],
   activate: async (app: JupyterFrontEnd, settingRegistry: ISettingRegistry) => {
     checkBrowserNotificationSettings();
-    let enabled = false;
+    let enabled = true;
     let minimumCellExecutionTime = 60;
     let reportCellExecutionTime = true;
     let reportCellNumber = true;
