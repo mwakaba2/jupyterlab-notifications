@@ -14,7 +14,8 @@ import { checkBrowserNotificationSettings } from './settings';
 function extractExecutionMetadata(metadata: IObservableJSON): [Date, Date] {
   const executionMetadata = Object.assign({}, metadata.get('execution') as any);
   const cellStartTime = new Date(
-    executionMetadata['shell.execute_reply.started'] || executionMetadata['iopub.execute_input']
+    executionMetadata['shell.execute_reply.started'] ||
+      executionMetadata['iopub.execute_input']
   );
   const cellEndTime = new Date(executionMetadata['shell.execute_reply']);
   return [cellStartTime, cellEndTime];
