@@ -27,6 +27,7 @@ function extractExecutionMetadata(metadata: IObservableJSON): [Date, Date] {
 function displayNotification(
   cellDuration: string,
   cellNumber: number,
+  notebookName: string,
   reportCellNumber: boolean,
   reportCellExecutionTime: boolean
 ): void {
@@ -42,8 +43,9 @@ function displayNotification(
   } else if (reportCellExecutionTime) {
     message = `Cell Duration: ${cellDuration}`;
   }
+
   notificationPayload.body = message;
-  new Notification('Notebook Cell Completed!', notificationPayload);
+  new Notification(`${notebookName} Cell Completed!`, notificationPayload);
 }
 
 const extension: JupyterFrontEndPlugin<void> = {
@@ -86,9 +88,11 @@ const extension: JupyterFrontEndPlugin<void> = {
             if (diff.getSeconds() >= minimumCellExecutionTime) {
               const cellDuration = diff.toISOString().substr(11, 8);
               const cellNumber = notebook.activeCellIndex;
+              const notebookName = notebook.title.label;
               displayNotification(
                 cellDuration,
                 cellNumber,
+                notebookName,
                 reportCellNumber,
                 reportCellExecutionTime
               );
