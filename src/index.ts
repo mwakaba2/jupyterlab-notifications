@@ -46,7 +46,7 @@ function displayNotification(
   }
 
   notificationPayload.body = message;
-  new Notification(`${notebookName}`, notificationPayload);
+  new Notification(`${notebookName} Cell Completed!`, notificationPayload);
 }
 
 const extension: JupyterFrontEndPlugin<void> = {
