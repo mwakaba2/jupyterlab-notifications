@@ -26,6 +26,13 @@
       "title": "Report Notebook Cell Number",
       "description": "Display notebook cell number in the notification.",
       "default": true
-    }
+    },
+    "cell_number_type": {
+        "type": "string",
+        "title": "Cell Number Type",
+        "description": "Type of cell number to display when the report_cell_number is true. Select from 'cell_index' or ‘cell_execution_count'.",
+        "enum": ["cell_index", "cell_execution_count"],
+        "default": "cell_index"
+      }
   }
 }

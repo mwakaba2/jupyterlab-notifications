@@ -42,6 +42,10 @@ Use the following settings to update cell execution time for a notification and 
     // Settings for the Notifications extension
     // ****************************************
 
+    // Cell Number Type
+    // Type of cell number to display when the report_cell_number is true. Select from 'cell_index' or ‘cell_execution_count'.
+    "cell_number_type": "cell_index",
+
     // Enabled Status
     // Enable the extension or not.
     "enabled": true,
