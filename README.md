@@ -56,7 +56,11 @@ Use the following settings to update cell execution time for a notification and 
 
     // Report Notebook Cell Number
     // Display notebook cell number in the notification.
-    "report_cell_number": true
+    "report_cell_number": true,
+
+    // Cell Number Type
+    // Type of cell number to display when the report_cell_number is true. Select from 'cell_index' or ‘cell_execution_count'.
+    "cell_number_type": "cell_index"
 }
 ```
 
