@@ -46,7 +46,7 @@ function displayNotification(
   }
 
   notificationPayload.body = message;
-  new Notification(`${notebookName} Cell Completed!`, notificationPayload);
+  new Notification(`${notebookName}`, notificationPayload);
 }
 
 const extension: JupyterFrontEndPlugin<void> = {
@@ -95,7 +95,10 @@ const extension: JupyterFrontEndPlugin<void> = {
                 cellNumberType === 'cell_index'
                   ? notebook.activeCellIndex
                   : codeCellModel.executionCount;
-              const notebookName = notebook.title.label;
+              const notebookName = notebook.title.label.replace(
+                /\.[^/.]+$/,
+                ''
+              );
               displayNotification(
                 cellDuration,
                 cellNumber,
