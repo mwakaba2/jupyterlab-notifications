@@ -89,7 +89,7 @@ const extension: JupyterFrontEndPlugin<void> = {
               metadata
             );
             const diff = new Date(<any>cellEndTime - <any>cellStartTime);
-            if (diff.getSeconds() >= minimumCellExecutionTime) {
+            if (diff.getTime() / 1000 >= minimumCellExecutionTime) {
               const cellDuration = diff.toISOString().substr(11, 8);
               const cellNumber =
                 cellNumberType === 'cell_index'
