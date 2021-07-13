@@ -8,9 +8,7 @@ function checkNotificationPromise(): boolean {
 }
 
 function handlePermission(permission: string): void {
-  if (permission === 'granted') {
-    alert('Browser Notifications are allowed. (^_^)b');
-  } else {
+  if (permission !== 'granted') {
     alert(
       'Browser Notifications are not allowed. Please update your browser settings to allow notifications.'
     );
