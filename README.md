@@ -5,9 +5,15 @@
 [![PyPI](https://img.shields.io/pypi/v/jupyterlab-notifications.svg)](https://pypi.org/project/jupyterlab-notifications)
 [![npm](https://img.shields.io/npm/v/jupyterlab-notifications.svg)](https://www.npmjs.com/package/jupyterlab-notifications)
 
-Notebook Cell Completion Browser Notifications for JupyterLab. 
+### Notebook Cell Completion Browser Notifications for JupyterLab. 
+
+*Image of successful notebook cell execution notification*
 
 <img width="387" alt="notification" src="https://user-images.githubusercontent.com/3497137/118382531-3275eb80-b5bc-11eb-9810-5b92183609c3.png">
+
+*Image of failed notebook cell execution notification* (Available only in >= v0.3.0)
+
+<img width="389" alt="error_notification" src="https://user-images.githubusercontent.com/3497137/126079534-cd2425be-3b2b-4410-b951-91f54c25ad6a.png">
 
 
 ## Requirements
@@ -22,7 +28,7 @@ Notebook Cell Completion Browser Notifications for JupyterLab.
   "recordTiming": true
 }
 ```
-* [BETA] the cell timing doesn't need to be enabled for Jupyterlab >= 3.1 and Jupyterlab notification version 0.3.0.
+* The cell timing doesn't need to be enabled for Jupyterlab >= 3.1 and Jupyterlab notification version >= v0.3.0.
 
 ## Install
 
