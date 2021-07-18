@@ -57,8 +57,8 @@ Use the following settings to update cell execution time for a notification and 
     // Enable the extension or not.
     "enabled": true,
 
-    // Trigger only for the last notebook cell execution.
-    // Trigger a notification only for the last executed notebook cell
+    // Trigger only for the last selected notebook cell execution.
+    // Trigger a notification only for the last selected executed notebook cell.
     "last_cell_only": false,
 
     // Minimum Notebook Cell Execution Time
