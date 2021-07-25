@@ -96,6 +96,7 @@ const extension: JupyterFrontEndPlugin<void> = {
     let reportCellExecutionTime = true;
     let reportCellNumber = true;
     let cellNumberType = 'cell_index';
+    const cellExecutionTimeMetadata: { [cellId: string]: {startTime: Date, endTime: Date} } = {};
 
     if (settingRegistry) {
       const setting = await settingRegistry.load(extension.id);
@@ -113,23 +114,24 @@ const extension: JupyterFrontEndPlugin<void> = {
       setting.changed.connect(updateSettings);
     }
 
-    let cellStartTime = new Date();
-
     NotebookActions.executionScheduled.connect((_, args) => {
+      const { cell } = args;
       if (enabled) {
-        cellStartTime = new Date();
+        cellExecutionTimeMetadata[cell.model.id] = { startTime: new Date(), endTime: new Date() };
       }
     });
 
     NotebookActions.executed.connect((_, args) => {
       if (enabled) {
         const { cell, notebook, success, error } = args;
-        const cellEndTime = new Date();
+        const cellId = cell.model.id;
+        cellExecutionTimeMetadata[cellId].endTime = new Date();
+        console.log(cellExecutionTimeMetadata);
         triggerNotification(
           cell,
           notebook,
-          cellStartTime,
-          cellEndTime,
+          cellExecutionTimeMetadata[cellId].startTime,
+          cellExecutionTimeMetadata[cellId].endTime,
           minimumCellExecutionTime,
           reportCellNumber,
           reportCellExecutionTime,
