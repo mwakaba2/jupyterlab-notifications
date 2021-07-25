@@ -50,8 +50,7 @@ function displayNotification(
 function triggerNotification(
   cell: Cell,
   notebook: Notebook,
-  cellStartTime: Date,
-  cellEndTime: Date,
+  executionMetadata: any, // TODO declare a class instead of any
   minimumCellExecutionTime: number,
   reportCellNumber: boolean,
   reportCellExecutionTime: boolean,
@@ -59,17 +58,18 @@ function triggerNotification(
   failedExecution: boolean,
   error: KernelError | null
 ) {
+  const { startTime, endTime, index: cellIndex } = executionMetadata;
   const codeCell = cell.model.type === 'code';
   const nonEmptyCell = cell.model.value.text.length > 0;
   if (codeCell && nonEmptyCell) {
     const codeCellModel = cell.model as ICodeCellModel;
-    const diff = new Date(<any>cellEndTime - <any>cellStartTime);
+    const diff = new Date(<any>endTime - <any>startTime);
     const diffSeconds = Math.floor(diff.getTime() / 1000);
     if (diffSeconds >= minimumCellExecutionTime) {
       const cellDuration = diff.toISOString().substr(11, 8);
       const cellNumber =
         cellNumberType === 'cell_index'
-          ? notebook.activeCellIndex
+          ? cellIndex
           : codeCellModel.executionCount;
       const notebookName = notebook.title.label.replace(/\.[^/.]+$/, '');
       displayNotification(
@@ -96,7 +96,15 @@ const extension: JupyterFrontEndPlugin<void> = {
     let reportCellExecutionTime = true;
     let reportCellNumber = true;
     let cellNumberType = 'cell_index';
-    const cellExecutionTimeMetadata: { [cellId: string]: {startTime: Date, endTime: Date} } = {};
+    let recentExecutedCellTime: Date = new Date();
+    const cellExecutionMetadata: {
+      [cellId: string]: {
+        index: number;
+        scheduledTime: Date;
+        endTime?: Date;
+        startTime?: Date;
+      };
+    } = {};
 
     if (settingRegistry) {
       const setting = await settingRegistry.load(extension.id);
@@ -115,9 +123,12 @@ const extension: JupyterFrontEndPlugin<void> = {
     }
 
     NotebookActions.executionScheduled.connect((_, args) => {
-      const { cell } = args;
+      const { cell, notebook } = args;
       if (enabled) {
-        cellExecutionTimeMetadata[cell.model.id] = { startTime: new Date(), endTime: new Date() };
+        cellExecutionMetadata[cell.model.id] = {
+          index: notebook.activeCellIndex,
+          scheduledTime: new Date()
+        };
       }
     });
 
@@ -125,13 +136,19 @@ const extension: JupyterFrontEndPlugin<void> = {
       if (enabled) {
         const { cell, notebook, success, error } = args;
         const cellId = cell.model.id;
-        cellExecutionTimeMetadata[cellId].endTime = new Date();
-        console.log(cellExecutionTimeMetadata);
+        const cellEndTime = new Date();
+        const scheduledTime = cellExecutionMetadata[cellId].scheduledTime;
+        cellExecutionMetadata[cellId].startTime =
+          scheduledTime > recentExecutedCellTime
+            ? scheduledTime
+            : recentExecutedCellTime;
+        cellExecutionMetadata[cellId].endTime = cellEndTime;
+        recentExecutedCellTime = cellEndTime;
+
         triggerNotification(
           cell,
           notebook,
-          cellExecutionTimeMetadata[cellId].startTime,
-          cellExecutionTimeMetadata[cellId].endTime,
+          cellExecutionMetadata[cellId],
           minimumCellExecutionTime,
           reportCellNumber,
           reportCellExecutionTime,
@@ -139,6 +156,7 @@ const extension: JupyterFrontEndPlugin<void> = {
           !success,
           error
         );
+        delete cellExecutionMetadata[cellId];
       }
     });
   }
