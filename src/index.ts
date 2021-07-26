@@ -57,7 +57,7 @@ function displayNotification(
 function triggerNotification(
   cell: Cell,
   notebook: Notebook,
-  executionMetadata: any, // TODO declare a class instead of any
+  executionMetadata: ICellExecutionMetadata,
   minimumCellExecutionTime: number,
   reportCellNumber: boolean,
   reportCellExecutionTime: boolean,
