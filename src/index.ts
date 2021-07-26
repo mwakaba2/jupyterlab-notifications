@@ -9,6 +9,13 @@ import { ICodeCellModel } from '@jupyterlab/cells';
 
 import { checkBrowserNotificationSettings } from './settings';
 
+interface ICellExecutionMetadata {
+  index: number;
+  scheduledTime: Date;
+  endTime?: Date;
+  startTime?: Date;
+}
+
 /**
  * Constructs notification message and displays it.
  */
@@ -96,14 +103,11 @@ const extension: JupyterFrontEndPlugin<void> = {
     let reportCellExecutionTime = true;
     let reportCellNumber = true;
     let cellNumberType = 'cell_index';
-    let recentExecutedCellTime: Date = new Date();
-    const cellExecutionMetadata: {
-      [cellId: string]: {
-        index: number;
-        scheduledTime: Date;
-        endTime?: Date;
-        startTime?: Date;
-      };
+    const cellExecutionMetadataTable: {
+      [cellId: string]: ICellExecutionMetadata;
+    } = {};
+    const recentNotebookExecutionTimes: {
+      [notebookId: string]: Date;
     } = {};
 
     if (settingRegistry) {
@@ -125,7 +129,7 @@ const extension: JupyterFrontEndPlugin<void> = {
     NotebookActions.executionScheduled.connect((_, args) => {
       const { cell, notebook } = args;
       if (enabled) {
-        cellExecutionMetadata[cell.model.id] = {
+        cellExecutionMetadataTable[cell.model.id] = {
           index: notebook.activeCellIndex,
           scheduledTime: new Date()
         };
@@ -134,21 +138,24 @@ const extension: JupyterFrontEndPlugin<void> = {
 
     NotebookActions.executed.connect((_, args) => {
       if (enabled) {
+        const cellEndTime = new Date();
         const { cell, notebook, success, error } = args;
         const cellId = cell.model.id;
-        const cellEndTime = new Date();
-        const scheduledTime = cellExecutionMetadata[cellId].scheduledTime;
-        cellExecutionMetadata[cellId].startTime =
-          scheduledTime > recentExecutedCellTime
+        const notebookId = notebook.id;
+        const scheduledTime = cellExecutionMetadataTable[cellId].scheduledTime;
+        const recentExecutedCellTime =
+          recentNotebookExecutionTimes[notebookId] || scheduledTime;
+        cellExecutionMetadataTable[cellId].startTime =
+          scheduledTime >= recentExecutedCellTime
             ? scheduledTime
             : recentExecutedCellTime;
-        cellExecutionMetadata[cellId].endTime = cellEndTime;
-        recentExecutedCellTime = cellEndTime;
+        cellExecutionMetadataTable[cellId].endTime = cellEndTime;
+        recentNotebookExecutionTimes[notebookId] = cellEndTime;
 
         triggerNotification(
           cell,
           notebook,
-          cellExecutionMetadata[cellId],
+          cellExecutionMetadataTable[cellId],
           minimumCellExecutionTime,
           reportCellNumber,
           reportCellExecutionTime,
@@ -156,7 +163,7 @@ const extension: JupyterFrontEndPlugin<void> = {
           !success,
           error
         );
-        delete cellExecutionMetadata[cellId];
+        delete cellExecutionMetadataTable[cellId];
       }
     });
   }
