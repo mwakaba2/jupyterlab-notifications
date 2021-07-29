@@ -6,7 +6,7 @@ import { KernelError, Notebook, NotebookActions } from '@jupyterlab/notebook';
 import { Cell } from '@jupyterlab/cells';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { ICodeCellModel } from '@jupyterlab/cells';
-
+import LRU from 'lru-cache';
 import { checkBrowserNotificationSettings } from './settings';
 
 interface ICellExecutionMetadata {
@@ -106,9 +106,10 @@ const extension: JupyterFrontEndPlugin<void> = {
     const cellExecutionMetadataTable: {
       [cellId: string]: ICellExecutionMetadata;
     } = {};
-    const recentNotebookExecutionTimes: {
-      [notebookId: string]: Date;
-    } = {};
+    const recentNotebookExecutionTimes: LRU<string, Date> = new LRU({
+      max: 500,
+      maxAge: 1000 * 60 * 60 * 10 // 10 hours
+    });
 
     if (settingRegistry) {
       const setting = await settingRegistry.load(extension.id);
@@ -144,13 +145,13 @@ const extension: JupyterFrontEndPlugin<void> = {
         const notebookId = notebook.id;
         const scheduledTime = cellExecutionMetadataTable[cellId].scheduledTime;
         const recentExecutedCellTime =
-          recentNotebookExecutionTimes[notebookId] || scheduledTime;
+          recentNotebookExecutionTimes.get(notebookId) || scheduledTime;
         cellExecutionMetadataTable[cellId].startTime =
           scheduledTime >= recentExecutedCellTime
             ? scheduledTime
             : recentExecutedCellTime;
         cellExecutionMetadataTable[cellId].endTime = cellEndTime;
-        recentNotebookExecutionTimes[notebookId] = cellEndTime;
+        recentNotebookExecutionTimes.set(notebookId, cellEndTime);
 
         triggerNotification(
           cell,
