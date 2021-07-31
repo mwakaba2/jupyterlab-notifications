@@ -7,6 +7,7 @@ import { Cell } from '@jupyterlab/cells';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { ICodeCellModel } from '@jupyterlab/cells';
 import LRU from 'lru-cache';
+import moment from 'moment';
 import { checkBrowserNotificationSettings } from './settings';
 
 interface ICellExecutionMetadata {
@@ -70,10 +71,9 @@ function triggerNotification(
   const nonEmptyCell = cell.model.value.text.length > 0;
   if (codeCell && nonEmptyCell) {
     const codeCellModel = cell.model as ICodeCellModel;
-    const diff = new Date(<any>endTime - <any>startTime);
-    const diffSeconds = Math.floor(diff.getTime() / 1000);
+    const cellDuration = moment.utc(moment(endTime).diff(startTime)).format("HH:mm:ss");
+    const diffSeconds = moment.duration(cellDuration).asSeconds();
     if (diffSeconds >= minimumCellExecutionTime) {
-      const cellDuration = diff.toISOString().substr(11, 8);
       const cellNumber =
         cellNumberType === 'cell_index'
           ? cellIndex
