@@ -103,9 +103,12 @@ const extension: JupyterFrontEndPlugin<void> = {
     let reportCellExecutionTime = true;
     let reportCellNumber = true;
     let cellNumberType = 'cell_index';
-    const cellExecutionMetadataTable: {
-      [cellId: string]: ICellExecutionMetadata;
-    } = {};
+    const cellExecutionMetadataTable: LRU<
+      string,
+      ICellExecutionMetadata
+    > = new LRU({
+      max: 500 * 5 // to save 500 notebooks x 5 cells
+    });
     const recentNotebookExecutionTimes: LRU<string, Date> = new LRU({
       max: 500
     });
@@ -129,10 +132,10 @@ const extension: JupyterFrontEndPlugin<void> = {
     NotebookActions.executionScheduled.connect((_, args) => {
       const { cell, notebook } = args;
       if (enabled) {
-        cellExecutionMetadataTable[cell.model.id] = {
+        cellExecutionMetadataTable.set(cell.model.id, {
           index: notebook.activeCellIndex,
           scheduledTime: new Date()
-        };
+        });
       }
     });
 
@@ -142,20 +145,26 @@ const extension: JupyterFrontEndPlugin<void> = {
         const { cell, notebook, success, error } = args;
         const cellId = cell.model.id;
         const notebookId = notebook.id;
-        const scheduledTime = cellExecutionMetadataTable[cellId].scheduledTime;
+        const cellExecutionMetadata = cellExecutionMetadataTable.get(cellId);
+        const scheduledTime = cellExecutionMetadata.scheduledTime;
+        // Get the cell's execution scheduled time if the recent notebook execution state doesn't exist.
+        // This happens commonly for first time notebook executions or notebooks that haven't been executed for a while.
         const recentExecutedCellTime =
           recentNotebookExecutionTimes.get(notebookId) || scheduledTime;
-        cellExecutionMetadataTable[cellId].startTime =
+
+        // Multiple cells can be scheduled at the same time, and the schedule time doesn't necessarily equate to the actual start time.
+        // If another cell has been executed more recently than the current cell's scheduled time, treat the recent execution as the cell's start time.
+        cellExecutionMetadata.startTime =
           scheduledTime >= recentExecutedCellTime
             ? scheduledTime
             : recentExecutedCellTime;
-        cellExecutionMetadataTable[cellId].endTime = cellEndTime;
+        cellExecutionMetadata.endTime = cellEndTime;
         recentNotebookExecutionTimes.set(notebookId, cellEndTime);
 
         triggerNotification(
           cell,
           notebook,
-          cellExecutionMetadataTable[cellId],
+          cellExecutionMetadata,
           minimumCellExecutionTime,
           reportCellNumber,
           reportCellExecutionTime,
@@ -163,7 +172,6 @@ const extension: JupyterFrontEndPlugin<void> = {
           !success,
           error
         );
-        delete cellExecutionMetadataTable[cellId];
       }
     });
   }
