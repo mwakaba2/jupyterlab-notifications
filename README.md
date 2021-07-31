@@ -59,6 +59,7 @@ Use the following settings to update cell execution time for a notification and 
 
     // Trigger only for the last selected notebook cell execution.
     // Trigger a notification only for the last selected executed notebook cell.
+    // NOTE: Only Available in version >= v0.3.0
     "last_cell_only": false,
 
     // Minimum Notebook Cell Execution Time
@@ -66,7 +67,8 @@ Use the following settings to update cell execution time for a notification and 
     "minimum_cell_execution_time": 60,
 
     // Report Notebook Cell Execution Time
-    // Display notebook cell execution time in the notification.
+    // Display notebook cell execution time in the notification. 
+    // If last_cell_only is set to true, the total duration of the selected cells will be displayed.
     "report_cell_execution_time": true,
 
     // Report Notebook Cell Number
