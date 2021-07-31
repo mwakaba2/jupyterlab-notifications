@@ -68,7 +68,9 @@ function triggerNotification(
 ) {
   const { startTime, endTime, index: cellIndex } = executionMetadata;
   const codeCellModel = cell.model as ICodeCellModel;
-  const cellDuration = moment.utc(moment(endTime).diff(startTime)).format("HH:mm:ss");
+  const cellDuration = moment
+    .utc(moment(endTime).diff(startTime))
+    .format('HH:mm:ss');
   const diffSeconds = moment.duration(cellDuration).asSeconds();
   console.log(cellDuration, diffSeconds);
   if (diffSeconds >= minimumCellExecutionTime) {
