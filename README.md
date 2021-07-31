@@ -15,12 +15,16 @@
 
 <img width="389" alt="error_notification" src="https://user-images.githubusercontent.com/3497137/126079534-cd2425be-3b2b-4410-b951-91f54c25ad6a.png">
 
+*Image of last selected notebook cell execution notification* (Available only in >= v0.3.0)
+
+<img width="394" alt="Screen Shot 2021-07-31 at 12 49 49 PM" src="https://user-images.githubusercontent.com/3497137/127746862-79012afd-caa7-4319-930d-7acfc74fa2f4.png">
+
 
 ## Requirements
 
 * Web Browser that supports the Notification Web API (See [Browser Compatibility Chart](https://developer.mozilla.org/en-US/docs/Web/API/notification#browser_compatibility))
 * JupyterLab >= 3.0
-* Notebook Cell Timing needs to be enabled for Jupyterlab Notifications with version < `0.3.0` to work. Please go to Settings -> Advanced Settings Editor -> Notebook and update setting to:
+* :warning: For versions < `0.3.0`, Notebook Cell Timing needs to be enabled for Jupyterlab Notifications to work. Please go to Settings -> Advanced Settings Editor -> Notebook and update setting to:
 ```json5
 {
   // Recording timing
