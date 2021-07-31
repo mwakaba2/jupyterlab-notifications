@@ -107,8 +107,7 @@ const extension: JupyterFrontEndPlugin<void> = {
       [cellId: string]: ICellExecutionMetadata;
     } = {};
     const recentNotebookExecutionTimes: LRU<string, Date> = new LRU({
-      max: 500,
-      maxAge: 1000 * 60 * 60 * 10 // 10 hours
+      max: 500
     });
 
     if (settingRegistry) {
