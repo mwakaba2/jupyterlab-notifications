@@ -67,28 +67,25 @@ function triggerNotification(
   error: KernelError | null
 ) {
   const { startTime, endTime, index: cellIndex } = executionMetadata;
-  const codeCell = cell.model.type === 'code';
-  const nonEmptyCell = cell.model.value.text.length > 0;
-  if (codeCell && nonEmptyCell) {
-    const codeCellModel = cell.model as ICodeCellModel;
-    const cellDuration = moment.utc(moment(endTime).diff(startTime)).format("HH:mm:ss");
-    const diffSeconds = moment.duration(cellDuration).asSeconds();
-    if (diffSeconds >= minimumCellExecutionTime) {
-      const cellNumber =
-        cellNumberType === 'cell_index'
-          ? cellIndex
-          : codeCellModel.executionCount;
-      const notebookName = notebook.title.label.replace(/\.[^/.]+$/, '');
-      displayNotification(
-        cellDuration,
-        cellNumber,
-        notebookName,
-        reportCellNumber,
-        reportCellExecutionTime,
-        failedExecution,
-        error
-      );
-    }
+  const codeCellModel = cell.model as ICodeCellModel;
+  const cellDuration = moment.utc(moment(endTime).diff(startTime)).format("HH:mm:ss");
+  const diffSeconds = moment.duration(cellDuration).asSeconds();
+  console.log(cellDuration, diffSeconds);
+  if (diffSeconds >= minimumCellExecutionTime) {
+    const cellNumber =
+      cellNumberType === 'cell_index'
+        ? cellIndex
+        : codeCellModel.executionCount;
+    const notebookName = notebook.title.label.replace(/\.[^/.]+$/, '');
+    displayNotification(
+      cellDuration,
+      cellNumber,
+      notebookName,
+      reportCellNumber,
+      reportCellExecutionTime,
+      failedExecution,
+      error
+    );
   }
 }
 
@@ -143,35 +140,39 @@ const extension: JupyterFrontEndPlugin<void> = {
       if (enabled) {
         const cellEndTime = new Date();
         const { cell, notebook, success, error } = args;
-        const cellId = cell.model.id;
-        const notebookId = notebook.id;
-        const cellExecutionMetadata = cellExecutionMetadataTable.get(cellId);
-        const scheduledTime = cellExecutionMetadata.scheduledTime;
-        // Get the cell's execution scheduled time if the recent notebook execution state doesn't exist.
-        // This happens commonly for first time notebook executions or notebooks that haven't been executed for a while.
-        const recentExecutedCellTime =
-          recentNotebookExecutionTimes.get(notebookId) || scheduledTime;
+        const codeCell = cell.model.type === 'code';
+        const nonEmptyCell = cell.model.value.text.length > 0;
+        if (codeCell && nonEmptyCell) {
+          const cellId = cell.model.id;
+          const notebookId = notebook.id;
+          const cellExecutionMetadata = cellExecutionMetadataTable.get(cellId);
+          const scheduledTime = cellExecutionMetadata.scheduledTime;
+          // Get the cell's execution scheduled time if the recent notebook execution state doesn't exist.
+          // This happens commonly for first time notebook executions or notebooks that haven't been executed for a while.
+          const recentExecutedCellTime =
+            recentNotebookExecutionTimes.get(notebookId) || scheduledTime;
 
-        // Multiple cells can be scheduled at the same time, and the schedule time doesn't necessarily equate to the actual start time.
-        // If another cell has been executed more recently than the current cell's scheduled time, treat the recent execution as the cell's start time.
-        cellExecutionMetadata.startTime =
-          scheduledTime >= recentExecutedCellTime
-            ? scheduledTime
-            : recentExecutedCellTime;
-        cellExecutionMetadata.endTime = cellEndTime;
-        recentNotebookExecutionTimes.set(notebookId, cellEndTime);
+          // Multiple cells can be scheduled at the same time, and the schedule time doesn't necessarily equate to the actual start time.
+          // If another cell has been executed more recently than the current cell's scheduled time, treat the recent execution as the cell's start time.
+          cellExecutionMetadata.startTime =
+            scheduledTime >= recentExecutedCellTime
+              ? scheduledTime
+              : recentExecutedCellTime;
+          cellExecutionMetadata.endTime = cellEndTime;
+          recentNotebookExecutionTimes.set(notebookId, cellEndTime);
 
-        triggerNotification(
-          cell,
-          notebook,
-          cellExecutionMetadata,
-          minimumCellExecutionTime,
-          reportCellNumber,
-          reportCellExecutionTime,
-          cellNumberType,
-          !success,
-          error
-        );
+          triggerNotification(
+            cell,
+            notebook,
+            cellExecutionMetadata,
+            minimumCellExecutionTime,
+            reportCellNumber,
+            reportCellExecutionTime,
+            cellNumberType,
+            !success,
+            error
+          );
+        }
       }
     });
   }
