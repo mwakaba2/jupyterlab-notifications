@@ -49,25 +49,31 @@ Use the following settings to update cell execution time for a notification and 
     // Settings for the Notifications extension
     // ****************************************
 
+    // Cell Number Type
+    // Type of cell number to display when the report_cell_number is true. Select from 'cell_index' or ‘cell_execution_count'.
+    "cell_number_type": "cell_index",
+
     // Enabled Status
     // Enable the extension or not.
     "enabled": true,
+
+    // Trigger only for the last selected notebook cell execution.
+    // Trigger a notification only for the last selected executed notebook cell.
+    // NOTE: Only Available in version >= v0.3.0
+    "last_cell_only": false,
 
     // Minimum Notebook Cell Execution Time
     // The minimum execution time to send out notification for a particular notebook cell (in seconds).
     "minimum_cell_execution_time": 60,
 
     // Report Notebook Cell Execution Time
-    // Display notebook cell execution time in the notification.
+    // Display notebook cell execution time in the notification. 
+    // If last_cell_only is set to true, the total duration of the selected cells will be displayed.
     "report_cell_execution_time": true,
 
     // Report Notebook Cell Number
     // Display notebook cell number in the notification.
-    "report_cell_number": true,
-
-    // Cell Number Type
-    // Type of cell number to display when the report_cell_number is true. Select from 'cell_index' or ‘cell_execution_count'.
-    "cell_number_type": "cell_index"
+    "report_cell_number": true
 }
 ```
 
