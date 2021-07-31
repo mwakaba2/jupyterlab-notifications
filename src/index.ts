@@ -166,18 +166,19 @@ const extension: JupyterFrontEndPlugin<void> = {
     NotebookActions.executed.connect((_, args) => {
       if (enabled && !lastCellOnly) {
         const { cell, notebook, success, error } = args;
-        triggerNotification(cell,
-                            notebook, 
-                            cellExecutionMetadataTable, 
-                            recentNotebookExecutionTimes,
-                            minimumCellExecutionTime,
-                            reportCellNumber,
-                            reportCellExecutionTime,
-                            cellNumberType,
-                            !success, 
-                            error,
-                            lastCellOnly);
-
+        triggerNotification(
+          cell,
+          notebook,
+          cellExecutionMetadataTable,
+          recentNotebookExecutionTimes,
+          minimumCellExecutionTime,
+          reportCellNumber,
+          reportCellExecutionTime,
+          cellNumberType,
+          !success,
+          error,
+          lastCellOnly
+        );
       }
     });
 
@@ -187,16 +188,17 @@ const extension: JupyterFrontEndPlugin<void> = {
         const failedExecution = false;
         triggerNotification(
           lastCell,
-          notebook, 
-          cellExecutionMetadataTable, 
+          notebook,
+          cellExecutionMetadataTable,
           recentNotebookExecutionTimes,
           minimumCellExecutionTime,
           reportCellNumber,
           reportCellExecutionTime,
           cellNumberType,
-          failedExecution, 
+          failedExecution,
           null,
-          lastCellOnly);
+          lastCellOnly
+        );
       }
     });
   }
