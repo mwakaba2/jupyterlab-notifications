@@ -19,8 +19,16 @@
 
 <img width="394" alt="Screen Shot 2021-07-31 at 12 49 49 PM" src="https://user-images.githubusercontent.com/3497137/127746862-79012afd-caa7-4319-930d-7acfc74fa2f4.png">
 
+## Quick demos and tutorials :notebook:
 
-## Requirements
+To test out this extension without any local set-up, please check out the [binder link](https://mybinder.org/v2/gh/mwakaba2/jupyterlab-notifications/main?urlpath=lab/tree/tutorial/py3_demo.ipynb). This will set-up the environment, install the extension, and take you to several demo notebooks for you to play around with to get familiar with the notifications extension. 
+
+In the `tutorial` directory, there are several example notebooks you can use to test out the notifications extension.
+
+* Notebooks with `py3_demo_` prefix - Minimal Python3 Notebooks to test out the extension.
+* `julia_demo.ipynb` - Minimal Julia Notebook to test out the extension. :warning: Note: The `tutorial/julia_demo.ipynb` will not work in the binder environment and will require additional set-up to test the Julia Notebook Kernel locally. 
+
+## Requirements 🧰
 
 * Web Browser that supports the Notification Web API (See [Browser Compatibility Chart](https://developer.mozilla.org/en-US/docs/Web/API/notification#browser_compatibility))
 * JupyterLab >= 3.0
