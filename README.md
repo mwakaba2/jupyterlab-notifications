@@ -1,7 +1,7 @@
 # jupyterlab-notifications
 
 ![Github Actions Status](https://github.com/mwakaba2/jupyterlab-notifications/workflows/Build/badge.svg)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/mwakaba2/jupyterlab-notifications/main?urlpath=/lab/tree/demo.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/mwakaba2/jupyterlab-notifications/main?urlpath=lab/tree/tutorial/py3_demo.ipynb)
 [![PyPI](https://img.shields.io/pypi/v/jupyterlab-notifications.svg)](https://pypi.org/project/jupyterlab-notifications)
 [![npm](https://img.shields.io/npm/v/jupyterlab-notifications.svg)](https://www.npmjs.com/package/jupyterlab-notifications)
 
