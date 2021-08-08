@@ -6,6 +6,7 @@ import { KernelError, Notebook, NotebookActions } from '@jupyterlab/notebook';
 import { Cell } from '@jupyterlab/cells';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { ICodeCellModel } from '@jupyterlab/cells';
+import { PageConfig } from '@jupyterlab/coreutils';
 import LRU from 'lru-cache';
 import moment from 'moment';
 import { checkBrowserNotificationSettings } from './settings';
@@ -28,8 +29,9 @@ function displayNotification(
   error: KernelError | null,
   lastCellOnly: boolean
 ): void {
+  const base = PageConfig.getBaseUrl();
   const notificationPayload = {
-    icon: '/static/favicon.ico',
+    icon: base + 'static/favicon.ico',
     body: ''
   };
   const title = failedExecution
