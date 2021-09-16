@@ -4,6 +4,7 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/mwakaba2/jupyterlab-notifications/main?urlpath=lab/tree/tutorial/py3_demo.ipynb)
 [![PyPI](https://img.shields.io/pypi/v/jupyterlab-notifications.svg)](https://pypi.org/project/jupyterlab-notifications)
 [![npm](https://img.shields.io/npm/v/jupyterlab-notifications.svg)](https://www.npmjs.com/package/jupyterlab-notifications)
+[![Conda Version](https://img.shields.io/conda/vn/conda-forge/jupyterlab-notifications.svg)](https://anaconda.org/conda-forge/jupyterlab-notifications)
 
 ### Notebook Cell Completion Browser Notifications for JupyterLab. 
 
@@ -48,6 +49,12 @@ For JupyterLab 3.x, the extension can be installed with `pip`:
 
 ```bash
 pip install jupyterlab-notifications
+```
+
+or `conda`:
+
+```bash
+conda install -c conda-forge jupyterlab-notifications
 ```
 
 ## Settings
