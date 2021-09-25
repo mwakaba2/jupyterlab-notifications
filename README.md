@@ -33,19 +33,14 @@ In the `tutorial` directory, there are several example notebooks you can use to 
 * Notebooks with `py3_demo_` prefix - Minimal Python3 Notebooks to test out the extension.
 * `julia_demo.ipynb` - Minimal Julia Notebook to test out the extension. :warning: Note: The `tutorial/julia_demo.ipynb` will not work in the binder environment and will require additional set-up to test the Julia Notebook Kernel locally. 
 
-## Requirements 🧰
+## Compatible Versions and Requirements 🧰
 
-* Web Browser that supports the Notification Web API (See [Browser Compatibility Chart](https://developer.mozilla.org/en-US/docs/Web/API/notification#browser_compatibility))
-* JupyterLab >= 3.0
-* :warning: For versions < `0.3.0`, Notebook Cell Timing needs to be enabled for Jupyterlab Notifications to work. Please go to Settings -> Advanced Settings Editor -> Notebook and update setting to:
-```json5
-{
-  // Recording timing
-  // Should timing data be recorded in cell metadata
-  "recordTiming": true
-}
-```
-* The cell timing doesn't need to be enabled for Jupyterlab >= 3.1 and Jupyterlab notification version >= v0.3.0.
+| `jupyterlab-notifications` | `jupyterlab`  | `Notebook Cell Timing Enabled` | `Browser Requirements` |
+|--------------------------- |---------------| -------------------------------| ---------------------- |
+|  `>=0.3.0`                 | `>=3.1.0`     | Not required                   | Supports the Notification Web API* 
+|  `<0.3.0`                  | `>3.0.0`      | Required                       | Supports the Notification Web API*                      |
+
+*For Notification Web API support, please check out [Browser Compatibility Chart](https://developer.mozilla.org/en-US/docs/Web/API/notification#browser_compatibility))
 
 ## Install
 
@@ -107,6 +102,19 @@ Use the following settings to update cell execution time for a notification and 
 ```
 
 ![notification](https://user-images.githubusercontent.com/3497137/111881088-01db5200-897d-11eb-8faa-4701cabfcde4.gif)
+
+### How to enable Notebook Cell Timing
+
+:warning: For versions < `0.3.0`, Notebook Cell Timing needs to be enabled for Jupyterlab Notifications to work. Please go to Settings -> Advanced Settings Editor -> Notebook and update setting to:
+```json5
+{
+  // Recording timing
+  // Should timing data be recorded in cell metadata
+  "recordTiming": true
+}
+```
+
+The cell timing doesn't need to be enabled for Jupyterlab >= 3.1 and Jupyterlab notification version >= v0.3.0.
 
 ## (Option) Notifications using `ntfy`
 
