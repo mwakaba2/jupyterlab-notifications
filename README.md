@@ -90,7 +90,7 @@ Use the following settings to update cell execution time for a notification and 
     "minimum_cell_execution_time": 60,
 
     // Notification Methods
-    // Methods how to notificate messages. Select from 'browser' or 'ntfy'
+    // Option to send a notification with the specified method(s). The available options are 'browser' and 'ntfy'.
     "notification_methods": [
         "browser"
     ],
@@ -108,22 +108,24 @@ Use the following settings to update cell execution time for a notification and 
 
 ![notification](https://user-images.githubusercontent.com/3497137/111881088-01db5200-897d-11eb-8faa-4701cabfcde4.gif)
 
-## (Option) Notifications using `ntfy`
+## (Optional) Notifications using `ntfy`
 
 You can recieve notifications via `ntfy`.
 
 **ntfy 2.7.0 documentation** https://ntfy.readthedocs.io/en/latest/
 
-> ntfy brings notification to your shell. It can automatically provide desktop notifications when long running commands finish or it can send push notifications to your phone when a specific command finishes.
+> ntfy brings notification to your shell. It can automatically provide desktop notifications when long running code executions finish or it can send push notifications to your phone when a specific execution finishes.
 
-### How to work
+### How to enable notifications via `ntfy`
 
 Install `ntfy`.
 
 ```console
 $ pip install ntfy
 ```
-Configure ntfy in accodance with [the ntfy official document](https://ntfy.readthedocs.io/en/latest/#configuring-ntfy)
+To configure ntfy, please check out [the ntfy official configuration docs](https://ntfy.readthedocs.io/en/latest/#configuring-ntfy)
+
+For example, if your OS is Linux and you want to select `pushover` for the backend, set configuration as follows.
 
 ```console
 $ vim ~/.config/ntfy/ntfy.yml
@@ -133,7 +135,7 @@ $ vim ~/.config/ntfy/ntfy.yml
 backends:
     - pushover
 pushover:
-    user_key: hunter2
+    user_key: YOUR_PUSHOVER_USER_KEY
 ```
 
 Change the notifications [settings](#settings). Append `"ntfy"` into `notification_methods` attribute.
