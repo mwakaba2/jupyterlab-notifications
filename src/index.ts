@@ -31,7 +31,7 @@ async function displayNotification(
   error: KernelError | null,
   lastCellOnly: boolean,
   notificationMethods: string[],
-  sessionContext: ISessionContext | null,
+  sessionContext: ISessionContext | null
 ): Promise<void> {
   const base = PageConfig.getBaseUrl();
   const notificationPayload = {
@@ -60,10 +60,9 @@ async function displayNotification(
   if (notificationMethods.includes('browser')) {
     new Notification(title, notificationPayload);
   }
-  if ((notificationMethods.includes('ntfy')) && (sessionContext)) {
+  if (notificationMethods.includes('ntfy') && sessionContext) {
     await issueNtfyNotification(title, notificationPayload, sessionContext);
   }
-
 }
 
 /**
@@ -82,7 +81,7 @@ async function triggerNotification(
   error: KernelError | null,
   lastCellOnly: boolean,
   notificationMethods: string[],
-  sessionContext: ISessionContext | null,
+  sessionContext: ISessionContext | null
 ) {
   const cellEndTime = new Date();
   const codeCellModel = cell.model as ICodeCellModel;
@@ -125,7 +124,7 @@ async function triggerNotification(
         error,
         lastCellOnly,
         notificationMethods,
-        sessionContext,
+        sessionContext
       );
     }
   }
@@ -159,7 +158,7 @@ const extension: JupyterFrontEndPlugin<void> = {
     const manager = app.serviceManager;
     const sessionContext = new SessionContext({
       sessionManager: manager.sessions as any,
-      specsManager: manager.kernelspecs,
+      specsManager: manager.kernelspecs
     });
 
     if (settingRegistry) {
@@ -174,7 +173,8 @@ const extension: JupyterFrontEndPlugin<void> = {
           .composite as boolean;
         cellNumberType = setting.get('cell_number_type').composite as string;
         lastCellOnly = setting.get('last_cell_only').composite as boolean;
-        notificationMethods = setting.get('notification_methods').composite as string[];
+        notificationMethods = setting.get('notification_methods')
+          .composite as string[];
       };
       updateSettings();
       setting.changed.connect(updateSettings);
@@ -206,7 +206,7 @@ const extension: JupyterFrontEndPlugin<void> = {
           error,
           lastCellOnly,
           notificationMethods,
-          sessionContext,
+          sessionContext
         );
       }
     });
@@ -228,7 +228,7 @@ const extension: JupyterFrontEndPlugin<void> = {
           null,
           lastCellOnly,
           notificationMethods,
-          sessionContext,
+          sessionContext
         );
       }
     });
