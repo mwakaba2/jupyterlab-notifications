@@ -44,13 +44,10 @@
       "type": "array",
       "minItems": 1,
       "items": {
-        "enum": [
-          "browser",
-          "ntfy"
-        ]
+        "enum": ["browser", "ntfy"]
       },
       "title": "Notification Methods",
-      "description": "Methods how to notificate messages. Select from 'browser' or 'ntfy'",
+      "description": "Option to send a notification with the specified method(s). The available options are 'browser' and 'ntfy'.",
       "default": ["browser"]
     }
   }
