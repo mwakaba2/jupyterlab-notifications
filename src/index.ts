@@ -2,6 +2,7 @@ import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
+import { ISessionContext, SessionContext } from '@jupyterlab/apputils';
 import { KernelError, Notebook, NotebookActions } from '@jupyterlab/notebook';
 import { Cell } from '@jupyterlab/cells';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
@@ -9,6 +10,7 @@ import { ICodeCellModel } from '@jupyterlab/cells';
 import { PageConfig } from '@jupyterlab/coreutils';
 import LRU from 'lru-cache';
 import moment from 'moment';
+import { issueNtfyNotification } from './ntfy';
 import { checkBrowserNotificationSettings } from './settings';
 
 interface ICellExecutionMetadata {
@@ -19,7 +21,7 @@ interface ICellExecutionMetadata {
 /**
  * Constructs notification message and displays it.
  */
-function displayNotification(
+async function displayNotification(
   cellDuration: string,
   cellNumber: number,
   notebookName: string,
@@ -27,8 +29,10 @@ function displayNotification(
   reportCellExecutionTime: boolean,
   failedExecution: boolean,
   error: KernelError | null,
-  lastCellOnly: boolean
-): void {
+  lastCellOnly: boolean,
+  notificationMethods: string[],
+  sessionContext: ISessionContext | null
+): Promise<void> {
   const base = PageConfig.getBaseUrl();
   const notificationPayload = {
     icon: base + 'static/favicon.ico',
@@ -52,13 +56,19 @@ function displayNotification(
   }
 
   notificationPayload.body = message;
-  new Notification(title, notificationPayload);
+
+  if (notificationMethods.includes('browser')) {
+    new Notification(title, notificationPayload);
+  }
+  if (notificationMethods.includes('ntfy') && sessionContext) {
+    await issueNtfyNotification(title, notificationPayload, sessionContext);
+  }
 }
 
 /**
  * Trigger notification.
  */
-function triggerNotification(
+async function triggerNotification(
   cell: Cell,
   notebook: Notebook,
   cellExecutionMetadataTable: LRU<string, ICellExecutionMetadata>,
@@ -69,7 +79,9 @@ function triggerNotification(
   cellNumberType: string,
   failedExecution: boolean,
   error: KernelError | null,
-  lastCellOnly: boolean
+  lastCellOnly: boolean,
+  notificationMethods: string[],
+  sessionContext: ISessionContext | null
 ) {
   const cellEndTime = new Date();
   const codeCellModel = cell.model as ICodeCellModel;
@@ -102,7 +114,7 @@ function triggerNotification(
           ? cellExecutionMetadata.index
           : codeCellModel.executionCount;
       const notebookName = notebook.title.label.replace(/\.[^/.]+$/, '');
-      displayNotification(
+      await displayNotification(
         cellDuration,
         cellNumber,
         notebookName,
@@ -110,7 +122,9 @@ function triggerNotification(
         reportCellExecutionTime,
         failedExecution,
         error,
-        lastCellOnly
+        lastCellOnly,
+        notificationMethods,
+        sessionContext
       );
     }
   }
@@ -128,6 +142,8 @@ const extension: JupyterFrontEndPlugin<void> = {
     let reportCellNumber = true;
     let cellNumberType = 'cell_index';
     let lastCellOnly = false;
+    let notificationMethods = ['browser'];
+
     const cellExecutionMetadataTable: LRU<
       string,
       ICellExecutionMetadata
@@ -136,6 +152,13 @@ const extension: JupyterFrontEndPlugin<void> = {
     });
     const recentNotebookExecutionTimes: LRU<string, Date> = new LRU({
       max: 500
+    });
+
+    // SessionContext is used for running python codes
+    const manager = app.serviceManager;
+    const sessionContext = new SessionContext({
+      sessionManager: manager.sessions as any,
+      specsManager: manager.kernelspecs
     });
 
     if (settingRegistry) {
@@ -150,6 +173,8 @@ const extension: JupyterFrontEndPlugin<void> = {
           .composite as boolean;
         cellNumberType = setting.get('cell_number_type').composite as string;
         lastCellOnly = setting.get('last_cell_only').composite as boolean;
+        notificationMethods = setting.get('notification_methods')
+          .composite as string[];
       };
       updateSettings();
       setting.changed.connect(updateSettings);
@@ -165,10 +190,10 @@ const extension: JupyterFrontEndPlugin<void> = {
       }
     });
 
-    NotebookActions.executed.connect((_, args) => {
+    NotebookActions.executed.connect(async (_, args) => {
       if (enabled && !lastCellOnly) {
         const { cell, notebook, success, error } = args;
-        triggerNotification(
+        await triggerNotification(
           cell,
           notebook,
           cellExecutionMetadataTable,
@@ -179,16 +204,18 @@ const extension: JupyterFrontEndPlugin<void> = {
           cellNumberType,
           !success,
           error,
-          lastCellOnly
+          lastCellOnly,
+          notificationMethods,
+          sessionContext
         );
       }
     });
 
-    NotebookActions.selectionExecuted.connect((_, args) => {
+    NotebookActions.selectionExecuted.connect(async (_, args) => {
       if (enabled && lastCellOnly) {
         const { lastCell, notebook } = args;
         const failedExecution = false;
-        triggerNotification(
+        await triggerNotification(
           lastCell,
           notebook,
           cellExecutionMetadataTable,
@@ -199,7 +226,9 @@ const extension: JupyterFrontEndPlugin<void> = {
           cellNumberType,
           failedExecution,
           null,
-          lastCellOnly
+          lastCellOnly,
+          notificationMethods,
+          sessionContext
         );
       }
     });
