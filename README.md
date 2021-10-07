@@ -18,12 +18,15 @@
 
 *Image of last selected notebook cell execution notification* (Available only in >= v0.3.0)
 
-<img width="394" alt="Screen Shot 2021-07-31 at 12 49 49 PM" src="https://user-images.githubusercontent.com/3497137/127746862-79012afd-caa7-4319-930d-7acfc74fa2f4.png">
+<img width="394" alt="last_selected_notebook_cell_notification" src="https://user-images.githubusercontent.com/3497137/127746862-79012afd-caa7-4319-930d-7acfc74fa2f4.png">
 
-*Image when recieving a notification on a mobilephone using ntfy*
+*Image of mobile phone notifications using `ntfy` + Pushover*
 
-<img width="324" height="318" src="static/images/pushover_android_example.png">
-<img width="324" src="static/images/pushover_iphone_example.jpeg">
+<p float="left">
+    <img width="300" alt="pushover_iphone_example" src="https://user-images.githubusercontent.com/3497137/136384645-843b8496-ad40-4c89-998b-ff46ea9f73a7.png">
+    <img width="300" alt="pushover_android_example" src="https://user-images.githubusercontent.com/3497137/136384911-1759a502-b51b-4da2-bbe9-a0244c4de468.png">
+
+</p>
 
 ## Quick demos and tutorials :notebook:
 
