@@ -22,7 +22,8 @@
 
 *Image when recieving a notification on a mobilephone using ntfy*
 
-<img width="324" height="318" src="static/images/via_ntfy_sample.png">
+<img width="324" height="318" src="static/images/pushover_android_example.png">
+<img width="324" src="static/images/pushover_iphone_example.jpeg">
 
 ## Quick demos and tutorials :notebook:
 
@@ -131,14 +132,16 @@ Install `ntfy`.
 ```console
 $ pip install ntfy
 ```
-To configure ntfy, please check out [the ntfy official configuration docs](https://ntfy.readthedocs.io/en/latest/#configuring-ntfy)
+You can find configuration instructions for different operating systems in [the ntfy official configuration docs](https://ntfy.readthedocs.io/en/latest/#configuring-ntfy)
 
-For example, if your OS is Linux and you want to select `pushover` for the backend, set configuration as follows.
+For example, if you want to get notifications via the [Pushover mobile app](https://pushover.net/), make sure to create the configuration file in the right location and select `pushover` for the backend.
 
 ```console
-$ vim ~/.config/ntfy/ntfy.yml
+$ vim ~/.config/ntfy/ntfy.yml # Linux
+$ vim ~/Library/Application Support/ntfy/ntfy.yml # macOS
 ```
 
+**Note:** You'll need to first install the Pushover mobile app and create an account to generate your user key. 
 ```yaml
 backends:
     - pushover
