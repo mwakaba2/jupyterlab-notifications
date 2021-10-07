@@ -4,4 +4,4 @@ channels:
 dependencies:
 - jupyterlab>=3.1
 - pip:
-  - jupyterlab-notifications==0.3.3
+  - jupyterlab-notifications==0.4.0
