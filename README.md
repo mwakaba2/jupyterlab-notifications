@@ -20,6 +20,10 @@
 
 <img width="394" alt="Screen Shot 2021-07-31 at 12 49 49 PM" src="https://user-images.githubusercontent.com/3497137/127746862-79012afd-caa7-4319-930d-7acfc74fa2f4.png">
 
+*Image when recieving a notification on a mobilephone using ntfy*
+
+<img width="324" height="318" src="static/images/via_ntfy_sample.png">
+
 ## Quick demos and tutorials :notebook:
 
 To test out this extension without any local set-up, please check out the [binder link](https://mybinder.org/v2/gh/mwakaba2/jupyterlab-notifications/main?urlpath=lab/tree/tutorial/py3_demo.ipynb). This will set-up the environment, install the extension, and take you to several demo notebooks for you to play around with to get familiar with the notifications extension. 
@@ -80,6 +84,12 @@ Use the following settings to update cell execution time for a notification and 
     // The minimum execution time to send out notification for a particular notebook cell (in seconds).
     "minimum_cell_execution_time": 60,
 
+    // Notification Methods
+    // Option to send a notification with the specified method(s). The available options are 'browser' and 'ntfy'.
+    "notification_methods": [
+        "browser"
+    ],
+
     // Report Notebook Cell Execution Time
     // Display notebook cell execution time in the notification. 
     // If last_cell_only is set to true, the total duration of the selected cells will be displayed.
@@ -105,6 +115,47 @@ Use the following settings to update cell execution time for a notification and 
 ```
 
 The cell timing doesn't need to be enabled for Jupyterlab >= 3.1 and Jupyterlab notification version >= v0.3.0.
+
+## (Optional) Notifications using `ntfy`
+
+You can recieve notifications via `ntfy`.
+
+**ntfy 2.7.0 documentation** https://ntfy.readthedocs.io/en/latest/
+
+> ntfy brings notification to your shell. It can automatically provide desktop notifications when long running code executions finish or it can send push notifications to your phone when a specific execution finishes.
+
+### How to enable notifications via `ntfy`
+
+Install `ntfy`.
+
+```console
+$ pip install ntfy
+```
+To configure ntfy, please check out [the ntfy official configuration docs](https://ntfy.readthedocs.io/en/latest/#configuring-ntfy)
+
+For example, if your OS is Linux and you want to select `pushover` for the backend, set configuration as follows.
+
+```console
+$ vim ~/.config/ntfy/ntfy.yml
+```
+
+```yaml
+backends:
+    - pushover
+pushover:
+    user_key: YOUR_PUSHOVER_USER_KEY
+```
+
+Change the notifications [settings](#settings). Append `"ntfy"` into `notification_methods` attribute.
+- NOTE: The value `browser` implies default conventional method, which uses Webbrowser's Notification API.
+
+```json5
+{
+    // ...
+    "notification_methods": ["browser", "ntfy"]
+    // ...
+}
+```
 
 ## Contributing
 
