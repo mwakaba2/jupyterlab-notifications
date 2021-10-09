@@ -27,8 +27,12 @@ Option to get notebook cell completion notifications via browser, slack, mobile,
 <p float="left">
     <img width="300" alt="pushover_iphone_example" src="https://user-images.githubusercontent.com/3497137/136384645-843b8496-ad40-4c89-998b-ff46ea9f73a7.png">
     <img width="300" alt="pushover_android_example" src="https://user-images.githubusercontent.com/3497137/136384911-1759a502-b51b-4da2-bbe9-a0244c4de468.png">
-
 </p>
+
+*Image of slack notification via `ntfy + slack_webhook`*
+
+<img width="899" alt="Screen Shot 2021-10-09 at 1 57 51 PM" src="https://user-images.githubusercontent.com/3497137/136669318-4e93e062-be38-4881-b63e-b36f69547a0a.png">
+
 
 ## Quick demos and tutorials :notebook:
 
