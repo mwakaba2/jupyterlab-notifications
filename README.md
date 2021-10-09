@@ -6,17 +6,19 @@
 [![npm](https://img.shields.io/npm/v/jupyterlab-notifications.svg)](https://www.npmjs.com/package/jupyterlab-notifications)
 [![Conda Version](https://img.shields.io/conda/vn/conda-forge/jupyterlab-notifications.svg)](https://anaconda.org/conda-forge/jupyterlab-notifications)
 
-### Notebook Cell Completion Browser Notifications for JupyterLab. 
+### Notebook Cell Completion Notifications for JupyterLab. 
 
-*Image of successful notebook cell execution notification*
+Option to get notebook cell completion notifications via browser, slack, mobile, telegram, and many more!
+
+*Image of successful notebook cell execution browser notification*
 
 <img width="387" alt="notification" src="https://user-images.githubusercontent.com/3497137/118382531-3275eb80-b5bc-11eb-9810-5b92183609c3.png">
 
-*Image of failed notebook cell execution notification* (Available only in >= v0.3.0)
+*Image of failed notebook cell execution browser notification* (Available only in >= v0.3.0)
 
 <img width="389" alt="error_notification" src="https://user-images.githubusercontent.com/3497137/126079534-cd2425be-3b2b-4410-b951-91f54c25ad6a.png">
 
-*Image of last selected notebook cell execution notification* (Available only in >= v0.3.0)
+*Image of last selected notebook cell execution browser notification* (Available only in >= v0.3.0)
 
 <img width="394" alt="last_selected_notebook_cell_notification" src="https://user-images.githubusercontent.com/3497137/127746862-79012afd-caa7-4319-930d-7acfc74fa2f4.png">
 
