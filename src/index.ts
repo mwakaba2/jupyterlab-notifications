@@ -86,7 +86,7 @@ async function triggerNotification(
   const cellEndTime = new Date();
   const codeCellModel = cell.model as ICodeCellModel;
   const codeCell = codeCellModel.type === 'code';
-  const nonEmptyCell = codeCellModel.value.text.length > 0;
+  const nonEmptyCell = codeCellModel.sharedModel.getSource().length > 0;
   if (codeCell && nonEmptyCell) {
     const cellId = codeCellModel.id;
     const notebookId = notebook.id;
