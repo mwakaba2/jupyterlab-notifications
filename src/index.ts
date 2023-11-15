@@ -86,7 +86,7 @@ async function triggerNotification(
   const cellEndTime = new Date();
   const codeCellModel = cell.model as ICodeCellModel;
   const codeCell = codeCellModel.type === 'code';
-  const nonEmptyCell = codeCellModel.value.text.length > 0;
+  const nonEmptyCell = codeCellModel.sharedModel.getSource().length > 0;
   if (codeCell && nonEmptyCell) {
     const cellId = codeCellModel.id;
     const notebookId = notebook.id;
@@ -144,12 +144,10 @@ const extension: JupyterFrontEndPlugin<void> = {
     let lastCellOnly = false;
     let notificationMethods = ['browser'];
 
-    const cellExecutionMetadataTable: LRU<
-      string,
-      ICellExecutionMetadata
-    > = new LRU({
-      max: 500 * 5 // to save 500 notebooks x 5 cells
-    });
+    const cellExecutionMetadataTable: LRU<string, ICellExecutionMetadata> =
+      new LRU({
+        max: 500 * 5 // to save 500 notebooks x 5 cells
+      });
     const recentNotebookExecutionTimes: LRU<string, Date> = new LRU({
       max: 500
     });

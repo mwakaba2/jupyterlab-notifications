@@ -6,51 +6,50 @@
 [![npm](https://img.shields.io/npm/v/jupyterlab-notifications.svg)](https://www.npmjs.com/package/jupyterlab-notifications)
 [![Conda Version](https://img.shields.io/conda/vn/conda-forge/jupyterlab-notifications.svg)](https://anaconda.org/conda-forge/jupyterlab-notifications)
 
-### Notebook Cell Completion Notifications for JupyterLab. 
+### Notebook Cell Completion Notifications for JupyterLab.
 
 Option to get notebook cell completion notifications via browser, slack, mobile, telegram, and many more!
 
-*Image of successful notebook cell execution browser notification*
+_Image of successful notebook cell execution browser notification_
 
 <img width="387" alt="notification" src="https://user-images.githubusercontent.com/3497137/118382531-3275eb80-b5bc-11eb-9810-5b92183609c3.png">
 
-*Image of failed notebook cell execution browser notification* (Available only in >= v0.3.0)
+_Image of failed notebook cell execution browser notification_ (Available only in >= v0.3.0)
 
 <img width="389" alt="error_notification" src="https://user-images.githubusercontent.com/3497137/126079534-cd2425be-3b2b-4410-b951-91f54c25ad6a.png">
 
-*Image of last selected notebook cell execution browser notification* (Available only in >= v0.3.0)
+_Image of last selected notebook cell execution browser notification_ (Available only in >= v0.3.0)
 
 <img width="394" alt="last_selected_notebook_cell_notification" src="https://user-images.githubusercontent.com/3497137/127746862-79012afd-caa7-4319-930d-7acfc74fa2f4.png">
 
-*Image of mobile phone notifications using `ntfy` + Pushover*
+_Image of mobile phone notifications using `ntfy` + Pushover_
 
 <p float="left">
     <img width="300" alt="pushover_iphone_example" src="https://user-images.githubusercontent.com/3497137/136384645-843b8496-ad40-4c89-998b-ff46ea9f73a7.png">
     <img width="300" alt="pushover_android_example" src="https://user-images.githubusercontent.com/3497137/136384911-1759a502-b51b-4da2-bbe9-a0244c4de468.png">
 </p>
 
-*Image of slack notification via `ntfy + slack_webhook`*
+_Image of slack notification via `ntfy + slack_webhook`_
 
 <img width="899" alt="Screen Shot 2021-10-09 at 1 57 51 PM" src="https://user-images.githubusercontent.com/3497137/136669318-4e93e062-be38-4881-b63e-b36f69547a0a.png">
 
-
 ## Quick demos and tutorials :notebook:
 
-To test out this extension without any local set-up, please check out the [binder link](https://mybinder.org/v2/gh/mwakaba2/jupyterlab-notifications/main?urlpath=lab/tree/tutorial/py3_demo.ipynb). This will set-up the environment, install the extension, and take you to several demo notebooks for you to play around with to get familiar with the notifications extension. 
+To test out this extension without any local set-up, please check out the [binder link](https://mybinder.org/v2/gh/mwakaba2/jupyterlab-notifications/main?urlpath=lab/tree/tutorial/py3_demo.ipynb). This will set-up the environment, install the extension, and take you to several demo notebooks for you to play around with to get familiar with the notifications extension.
 
 In the `tutorial` directory, there are several example notebooks you can use to test out the notifications extension.
 
-* Notebooks with `py3_demo_` prefix - Minimal Python3 Notebooks to test out the extension.
-* `julia_demo.ipynb` - Minimal Julia Notebook to test out the extension. :warning: Note: The `tutorial/julia_demo.ipynb` will not work in the binder environment and will require additional set-up to test the Julia Notebook Kernel locally. 
+- Notebooks with `py3_demo_` prefix - Minimal Python3 Notebooks to test out the extension.
+- `julia_demo.ipynb` - Minimal Julia Notebook to test out the extension. :warning: Note: The `tutorial/julia_demo.ipynb` will not work in the binder environment and will require additional set-up to test the Julia Notebook Kernel locally.
 
 ## Compatible Versions and Requirements 🧰
 
-| `jupyterlab-notifications` | `jupyterlab`  | `Notebook Cell Timing Enabled` | `Browser Requirements` |
-|--------------------------- |---------------| -------------------------------| ---------------------- |
-|  `>=0.3.0`                 | `>=3.1.0`     | Not required                   | Supports the Notification Web API* 
-|  `<0.3.0`                  | `>3.0.0`      | Required                       | Supports the Notification Web API*                      |
+| `jupyterlab-notifications` | `jupyterlab` | `Notebook Cell Timing Enabled` | `Browser Requirements`              |
+| -------------------------- | ------------ | ------------------------------ | ----------------------------------- |
+| `>=0.3.0`                  | `>=3.1.0`    | Not required                   | Supports the Notification Web API\* |
+| `<0.3.0`                   | `>3.0.0`     | Required                       | Supports the Notification Web API\* |
 
-*For Notification Web API support, please check out [Browser Compatibility Chart](https://developer.mozilla.org/en-US/docs/Web/API/notification#browser_compatibility))
+\*For Notification Web API support, please check out [Browser Compatibility Chart](https://developer.mozilla.org/en-US/docs/Web/API/notification#browser_compatibility))
 
 ## Install
 
@@ -72,42 +71,40 @@ Use the following settings to update cell execution time for a notification and 
 
 ```json5
 {
-    // Notifications
-    // jupyterlab-notifications:plugin
-    // Settings for the Notifications extension
-    // ****************************************
+  // Notifications
+  // jupyterlab-notifications:plugin
+  // Settings for the Notifications extension
+  // ****************************************
 
-    // Cell Number Type
-    // Type of cell number to display when the report_cell_number is true. Select from 'cell_index' or ‘cell_execution_count'.
-    "cell_number_type": "cell_index",
+  // Cell Number Type
+  // Type of cell number to display when the report_cell_number is true. Select from 'cell_index' or ‘cell_execution_count'.
+  cell_number_type: 'cell_index',
 
-    // Enabled Status
-    // Enable the extension or not.
-    "enabled": true,
+  // Enabled Status
+  // Enable the extension or not.
+  enabled: true,
 
-    // Trigger only for the last selected notebook cell execution.
-    // Trigger a notification only for the last selected executed notebook cell.
-    // NOTE: Only Available in version >= v0.3.0
-    "last_cell_only": false,
+  // Trigger only for the last selected notebook cell execution.
+  // Trigger a notification only for the last selected executed notebook cell.
+  // NOTE: Only Available in version >= v0.3.0
+  last_cell_only: false,
 
-    // Minimum Notebook Cell Execution Time
-    // The minimum execution time to send out notification for a particular notebook cell (in seconds).
-    "minimum_cell_execution_time": 60,
+  // Minimum Notebook Cell Execution Time
+  // The minimum execution time to send out notification for a particular notebook cell (in seconds).
+  minimum_cell_execution_time: 60,
 
-    // Notification Methods
-    // Option to send a notification with the specified method(s). The available options are 'browser' and 'ntfy'.
-    "notification_methods": [
-        "browser"
-    ],
+  // Notification Methods
+  // Option to send a notification with the specified method(s). The available options are 'browser' and 'ntfy'.
+  notification_methods: ['browser'],
 
-    // Report Notebook Cell Execution Time
-    // Display notebook cell execution time in the notification. 
-    // If last_cell_only is set to true, the total duration of the selected cells will be displayed.
-    "report_cell_execution_time": true,
+  // Report Notebook Cell Execution Time
+  // Display notebook cell execution time in the notification.
+  // If last_cell_only is set to true, the total duration of the selected cells will be displayed.
+  report_cell_execution_time: true,
 
-    // Report Notebook Cell Number
-    // Display notebook cell number in the notification.
-    "report_cell_number": true
+  // Report Notebook Cell Number
+  // Display notebook cell number in the notification.
+  report_cell_number: true
 }
 ```
 
@@ -116,11 +113,12 @@ Use the following settings to update cell execution time for a notification and 
 ### How to enable Notebook Cell Timing
 
 :warning: For versions < `0.3.0`, Notebook Cell Timing needs to be enabled for Jupyterlab Notifications to work. Please go to Settings -> Advanced Settings Editor -> Notebook and update setting to:
+
 ```json5
 {
   // Recording timing
   // Should timing data be recorded in cell metadata
-  "recordTiming": true
+  recordTiming: true
 }
 ```
 
@@ -141,6 +139,7 @@ Install `ntfy`.
 ```console
 $ pip install ntfy
 ```
+
 You can find configuration instructions for different operating systems in [the ntfy official configuration docs](https://ntfy.readthedocs.io/en/latest/#configuring-ntfy)
 
 For example, if you want to get notifications via the [Pushover mobile app](https://pushover.net/), make sure to create the configuration file in the right location and select `pushover` for the backend.
@@ -150,22 +149,24 @@ $ vim ~/.config/ntfy/ntfy.yml # Linux
 $ vim ~/Library/Application Support/ntfy/ntfy.yml # macOS
 ```
 
-**Note:** You'll need to first install the Pushover mobile app and create an account to generate your user key. 
+**Note:** You'll need to first install the Pushover mobile app and create an account to generate your user key.
+
 ```yaml
 backends:
-    - pushover
+  - pushover
 pushover:
-    user_key: YOUR_PUSHOVER_USER_KEY
+  user_key: YOUR_PUSHOVER_USER_KEY
 ```
 
 Change the notifications [settings](#settings). Append `"ntfy"` into `notification_methods` attribute.
+
 - NOTE: The value `browser` implies default conventional method, which uses Webbrowser's Notification API.
 
 ```json5
 {
-    // ...
-    "notification_methods": ["browser", "ntfy"]
-    // ...
+  // ...
+  notification_methods: ['browser', 'ntfy']
+  // ...
 }
 ```
 
